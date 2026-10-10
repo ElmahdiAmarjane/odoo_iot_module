@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_iot_temperature_list" model="ir.ui.view">
+        <field name="name">iot.temperature.list</field>
+        <field name="model">iot.temperature</field>
+        <field name="arch" type="xml">
+            <list string="IoT Measurements">
+                <field name="measurement_date"/>
+                <field name="device_id"/>
+                <field name="temperature"/>
+                <field name="humidity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_iot_temperature_form" model="ir.ui.view">
+        <field name="name">iot.temperature.form</field>
+        <field name="model">iot.temperature</field>
+        <field name="arch" type="xml">
+            <form string="IoT Measurement">
+                <sheet>
+                    <group>
+                        <field name="device_id"/>
+                        <field name="measurement_date"/>
+                        <field name="temperature"/>
+                        <field name="humidity"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_iot_temperature" model="ir.actions.act_window">
+        <field name="name">IoT Measurements</field>
+        <field name="res_model">iot.temperature</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_iot_root"
+              name="IoT Monitoring"
+              sequence="10"/>
+
+    <menuitem id="menu_iot_temperature"
+              name="Measurements"
+              parent="menu_iot_root"
+              action="action_iot_temperature"
+              sequence="10"/>
+</odoo>
