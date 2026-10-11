@@ -1,13 +1,18 @@
+
 <odoo>
     <record id="view_iot_temperature_list" model="ir.ui.view">
         <field name="name">iot.temperature.list</field>
         <field name="model">iot.temperature</field>
         <field name="arch" type="xml">
-            <list string="IoT Measurements">
+            <list string="IoT Measurements"
+                  decoration-danger="temperature_status == 'alert'">
                 <field name="measurement_date"/>
                 <field name="device_id"/>
                 <field name="temperature"/>
                 <field name="humidity"/>
+                <field name="temperature_status"
+                       decoration-danger="temperature_status == 'alert'"
+                       decoration-success="temperature_status == 'normal'"/>
             </list>
         </field>
     </record>
@@ -18,11 +23,22 @@
         <field name="arch" type="xml">
             <form string="IoT Measurement">
                 <sheet>
+                    <div class="alert alert-danger"
+                         role="alert"
+                         invisible="temperature_status != 'alert'">
+                        <strong>Temperature Alert!</strong>
+                        Temperature exceeds 35 °C.
+                    </div>
+
                     <group>
                         <field name="device_id"/>
                         <field name="measurement_date"/>
                         <field name="temperature"/>
                         <field name="humidity"/>
+                        <field name="temperature_status"
+                               widget="badge"
+                               decoration-danger="temperature_status == 'alert'"
+                               decoration-success="temperature_status == 'normal'"/>
                     </group>
                 </sheet>
             </form>

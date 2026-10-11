@@ -1,0 +1,14 @@
+
+<templates xml:space="preserve">
+    <t t-name="iot_temperature.TemperatureAlert">
+        <div t-if="this.state.alert"
+             class="o_iot_temperature_alert"
+             role="alert">
+            <i class="fa fa-exclamation-triangle me-1"/>
+            <strong>HIGH TEMPERATURE</strong>
+            <span class="ms-2">
+                <t t-out="this.state.temperature"/> °C
+            </span>
+        </div>
+    </t>
+</templates>

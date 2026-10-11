@@ -1,0 +1,13 @@
+
+.o_iot_temperature_alert {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    margin: 4px 8px;
+    border-radius: 5px;
+    background-color: #dc3545;
+    color: white;
+    font-weight: 600;
+    white-space: nowrap;
+}

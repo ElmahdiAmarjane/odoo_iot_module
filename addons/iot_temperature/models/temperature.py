@@ -1,4 +1,5 @@
-from odoo import models, fields
+
+from odoo import models, fields, api
 
 
 class IoTTemperature(models.Model):
@@ -9,21 +10,39 @@ class IoTTemperature(models.Model):
     device_id = fields.Char(
         string="Device ID",
         required=True,
-        default="ESP32_DHT11_01"
+        default="ESP32_DHT11_01",
     )
 
     temperature = fields.Float(
         string="Temperature (°C)",
-        required=True
+        required=True,
     )
 
     humidity = fields.Float(
         string="Humidity (%)",
-        required=True
+        required=True,
     )
 
     measurement_date = fields.Datetime(
         string="Measurement Date",
         required=True,
-        default=fields.Datetime.now
+        default=fields.Datetime.now,
     )
+
+    temperature_status = fields.Selection(
+        [
+            ("normal", "Normal"),
+            ("alert", "High Temperature"),
+        ],
+        string="Temperature Status",
+        compute="_compute_temperature_status",
+        store=True,
+    )
+
+    @api.depends("temperature")
+    def _compute_temperature_status(self):
+        for record in self:
+            if record.temperature > 35:
+                record.temperature_status = "alert"
+            else:
+                record.temperature_status = "normal"

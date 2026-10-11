@@ -6,7 +6,7 @@ url = "http://localhost:8069/iot/temperature"
 
 data = {
     "device_id": "ESP32_DHT11_01",
-    "temperature": 28.5,
+    "temperature":40.5,
     "humidity": 61.2
 }
 

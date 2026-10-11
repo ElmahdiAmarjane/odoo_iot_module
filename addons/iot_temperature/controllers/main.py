@@ -49,3 +49,28 @@ class IoTTemperatureController(http.Controller):
                 {"error": "Invalid JSON or missing measurement fields"},
                 status=400,
             )
+
+
+    @http.route(
+        "/iot/temperature/status",
+        type="http",
+        auth="user",
+        methods=["GET"],
+    )
+    def temperature_status(self, **kwargs):
+        latest = request.env["iot.temperature"].search(
+            [("device_id", "=", "ESP32_DHT11_01")],
+            order="measurement_date desc, id desc",
+            limit=1,
+        )
+
+        if not latest:
+            return request.make_json_response({
+                "alert": False,
+                "temperature": None,
+            })
+
+        return request.make_json_response({
+            "alert": latest.temperature > 35,
+            "temperature": latest.temperature,
+        })
